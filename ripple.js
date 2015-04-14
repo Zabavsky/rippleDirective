@@ -13,6 +13,8 @@
  *  - position: relative;
  *  - overflow: hidden; (recommended)
 /**********************************************************************/
+angular.module('ripple', [])
+
 .directive('ripple', ['$timeout', '$styleSheet', function($timeout, $styleSheet) {
     return {
         restrict: 'A',
