@@ -13,7 +13,7 @@
  *  - position: relative;
  *  - overflow: hidden; (recommended)
 /**********************************************************************/
-angular.module('ripple', [])
+angular.module('rippleDirective', [])
 
 .directive('ripple', ['$timeout', '$styleSheet', function($timeout, $styleSheet) {
     return {
