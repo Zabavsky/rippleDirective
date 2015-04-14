@@ -33,24 +33,24 @@
             var rippleColor = $attrs.ripplecolor || '#ccc';
 
             // Add this directive's styles to the document's stylesheet.
-            $styleSheet.addCSSRule(styleSheet, '.ripple-effect', '\
-                border-radius: 50%;\
-                position: absolute;\
-            ', 1);
+            $styleSheet.addCSSRule(styleSheet, '.ripple-effect',
+                'border-radius: 50%;' +
+                'position: absolute;'
+            , 1);
 
             // Add the animation used to the directove to the document's stylesheet.
-            $styleSheet.addCSSKeyframes(styleSheet, 'ripple-effect', '\
-                0% {\
-                    opacity: .75;\
-                    -'+prefix+'-transform: scale(0);\
-                    transform: scale(0);\
-                }\
-                100% {\
-                    opacity: 0;\
-                    -'+prefix+'-transform: scale(1);\
-                    transform: scale(1);\
-                }\
-            ', 1);
+            $styleSheet.addCSSKeyframes(styleSheet, 'ripple-effect',
+                '0% {' +
+                    'opacity: .75;' +
+                    '-'+prefix+'-transform: scale(0);' +
+                    'transform: scale(0);' +
+                '}' +
+                '100% {' +
+                    'opacity: 0;' +
+                    '-'+prefix+'-transform: scale(1);' +
+                    'transform: scale(1);' +
+                }'
+            , 1);
 
             // Add the element that will be animated to the element using this directive.
             $element.append(angular.element('<div class="ripple-effect"></div>'));
