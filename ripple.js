@@ -51,7 +51,7 @@ angular.module('ripple', [])
                     'opacity: 0;' +
                     '-'+prefix+'-transform: scale(1);' +
                     'transform: scale(1);' +
-                }'
+                '}'
             , 1);
 
             // Add the element that will be animated to the element using this directive.
