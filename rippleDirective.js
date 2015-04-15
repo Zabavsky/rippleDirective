@@ -84,6 +84,9 @@ angular.module('rippleDirective', ['styleSheetFactory'])
                 var animation = 'ripple-effect ease-out ' + animationLength + 'ms forwards;';
                 var eventX = 0;
                 var eventY = 0;
+                
+                // Make sure effect visible on top of all other elements.
+                $element.append(effect);
 
                 if(isTouch) {
                     eventX = event.touches[0].clientX;
