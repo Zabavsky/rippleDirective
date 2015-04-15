@@ -4,7 +4,7 @@
  * 
  * Prerequisites:
  *  - AngularJS
- *  - $styleSheet (https://github.com/bklik/styleSheetFactory)
+ *  - styleSheetFactory (https://github.com/bklik/styleSheetFactory)
  * 
  * Description:
  * Creates the expanding/fading material design circle effect, that
@@ -15,7 +15,7 @@
 /**********************************************************************/
 angular.module('rippleDirective', ['styleSheetFactory'])
 
-.directive('ripple', ['$timeout', '$styleSheet', function($timeout, $styleSheet) {
+.directive('ripple', ['$timeout', 'styleSheetFactory', function($timeout, styleSheetFactory) {
     return {
         restrict: 'A',
         link: function($scope, $element, $attrs) {
@@ -29,23 +29,23 @@ angular.module('rippleDirective', ['styleSheetFactory'])
             var removeTime = 0;
 
             // The document's stylesheet.
-            var styleSheet = $styleSheet.getStyleSheet();
+            var styleSheet = styleSheetFactory.getStyleSheet();
 
             // The prefix used by the browser for non-standard properties.
-            var prefix = $styleSheet.getPrefix();
+            var prefix = styleSheetFactory.getPrefix();
 
             // Sets the default color for the ripple.
             var rippleColor = $attrs.ripplecolor || '#ccc';
 
             // Add this directive's styles to the document's stylesheet.
-            $styleSheet.addCSSRule(styleSheet, '.ripple-effect',
+            styleSheetFactory.addCSSRule(styleSheet, '.ripple-effect',
                 'border-radius: 50%;' +
                 'pointer-events: none;' +
                 'position: absolute;'
             , 1);
 
             // Add the animation used to the directove to the document's stylesheet.
-            $styleSheet.addCSSKeyframes(styleSheet, 'ripple-effect',
+            styleSheetFactory.addCSSKeyframes(styleSheet, 'ripple-effect',
                 '0% {' +
                     'opacity: .75;' +
                     '-'+prefix+'-transform: scale(0);' +
@@ -84,7 +84,7 @@ angular.module('rippleDirective', ['styleSheetFactory'])
                 var animation = 'ripple-effect ease-out ' + animationLength + 'ms forwards;';
                 var eventX = 0;
                 var eventY = 0;
-                
+
                 // Make sure effect visible on top of all other elements.
                 $element.append(effect);
 
