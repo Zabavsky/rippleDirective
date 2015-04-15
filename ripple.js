@@ -13,7 +13,7 @@
  *  - position: relative;
  *  - overflow: hidden; (recommended)
 /**********************************************************************/
-angular.module('rippleDirective', [])
+angular.module('rippleDirective', ['styleSheetFactory'])
 
 .directive('ripple', ['$timeout', '$styleSheet', function($timeout, $styleSheet) {
     return {
@@ -23,7 +23,10 @@ angular.module('rippleDirective', [])
             var isTouch = false;
 
             // The amount of time (in miliseconds) you want the animation to last.
-            var animationLength = 600; 
+            var animationLength = 600;
+
+            // Fuse for removeing the style.
+            var removeTime = 0;
 
             // The document's stylesheet.
             var styleSheet = $styleSheet.getStyleSheet();
@@ -37,6 +40,7 @@ angular.module('rippleDirective', [])
             // Add this directive's styles to the document's stylesheet.
             $styleSheet.addCSSRule(styleSheet, '.ripple-effect',
                 'border-radius: 50%;' +
+                'pointer-events: none;' +
                 'position: absolute;'
             , 1);
 
@@ -64,6 +68,15 @@ angular.module('rippleDirective', [])
 
             // Causes the ripple effect to happen from the event's point of origin.
             var makeRipple = function(event, isTouch) {
+                // If the fuse is lit, reset the length of the fuse, otherwise, light the fuse
+                if(removeTime <= 0) {
+                    removeTime = animationLength;
+                    delayRemove();
+                } else {
+                    removeTime = animationLength;
+                    removeStyle();
+                }
+
                 var root = $element[0];
                 var effect = root.querySelector('.ripple-effect');
                 var rootRect = root.getBoundingClientRect();
@@ -89,8 +102,16 @@ angular.module('rippleDirective', [])
                     '-'+prefix+'-animation: ' + animation +
                     'animation: ' + animation
                 );
-                $timeout.cancel(removeStyle);
-                $timeout(removeStyle, animationLength);
+            };
+
+            // Fuse function to remove the animation
+            var delayRemove = function() {
+                if(removeTime > 0) {
+                    removeTime -= 100;
+                    $timeout(delayRemove, 100);
+                } else {
+                    removeStyle();
+                }
             };
 
             // Creates a touchstart event handler which triggers a ripple.
@@ -109,4 +130,4 @@ angular.module('rippleDirective', [])
             });
         }
     }
-}])
+}]);
