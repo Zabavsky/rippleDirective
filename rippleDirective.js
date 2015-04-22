@@ -110,8 +110,8 @@ angular.module('rippleDirective', ['styleSheetFactory'])
             // Fuse function to remove the animation
             var delayRemove = function() {
                 if(removeTime > 0) {
-                    removeTime -= 100;
-                    $timeout(delayRemove, 100);
+                    removeTime -= 10;
+                    $timeout(delayRemove, 10);
                 } else {
                     removeStyle();
                 }
